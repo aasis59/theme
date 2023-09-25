@@ -1,0 +1,47 @@
+<div class="d-flex flex-column justify-content-center align-items-center  ">
+
+  <h1>{{ section.settings.title }}</h1>
+  <p>{{ section.settings.subtext_title }}</p>
+  <div class="m-2">
+    {% if section.settings.button_url == blank %}
+      {% assign shop_url = shop.secure_url %}
+    {% else %}
+      {% assign shop_url = section.settings.button_url %}
+    {% endif %}
+    <div class="p-2 bg-success text-white>
+      <a href="shop_url">{{ section.settings.button_label }}</a>
+    </div>
+
+
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Template 404",
+    "settings": [
+
+      {
+        "type": "text",
+        "id": "title",
+        "default": "404",
+        "label": "404 HEADING TITLE"
+      }, {
+        "type": "text",
+        "id": "subtext_title",
+        "default": "The page you are looking was not found",
+        "label": "404 Subtext Title"
+      }, {
+        "type": "text",
+        "id": "button_label",
+        "default": "Back to Home",
+        "label": "Button Label"
+      }, {
+        "type": "text",
+        "id": "button_url",
+        "label": "Button URL"
+      }
+
+    ]
+  }
+{% endschema %}
