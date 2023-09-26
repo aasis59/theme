@@ -1,14 +1,56 @@
-<h1>{{ article.title }}</h1>
-{% if section.settings.enable_author %}
-  <small>{{ article.author }}</small>
-{% endif %}
-{% if section.settings.enable_Published_date %}
-  <time dateline=" {{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
-{% endif %}
-<br/>
-<img src="{{ article.image | img_url:'large'  }}" alt="article.image.alt">
-<div class=" ">
-  {{ article.content }}</div>
+<article
+  itemscope
+  itemtype="http://schema.org/BlogPosting">
+  {% for block in section.blocks %}
+
+    {% case block.type %}
+      {% when 'article_title' %}
+      <div class=" mt-2 d-flex  justify-content-center">
+        <h1 itemprop="headline">{{ article.title }}</h1>
+      </div>
+
+      {% when 'article_author' %}
+      <div
+        class=" mt-2  d-flex  justify-content-center "
+        itemscope
+        itemtype="https://schema.org/Person">
+        {% if section.settings.enable_author %}
+          <small itemprop="author">{{ article.author }}</small>
+        {% endif %}
+      </div>
+
+      {% when 'article_published_date' %}
+      <div class=" mt-2 d-flex  justify-content-center">
+        {% if section.settings.enable_Published_date %}
+          <time itemprop="datePublished dataCreated" dateline=" {{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
+        {% endif %}
+      </div>
+
+      {% when 'featured_image' %}
+
+      <br/>
+      <div class=" mt-2  h-auto d-flex  justify-content-center" itemprop="image">
+        {% if article.image != blank %}
+          <img src="{{ article.image | img_url:'large'  }}" alt="article.image.alt">
+        {% else %}
+          {% assign placeholder_image = 'lifestyle-2' %}
+          {{ placeholder_image | placeholder_svg_tag: 'w-50 h-auto  justify-content-center' }}
+        {% endif %}
+
+      </div>
+
+      {% when 'article_content' %}
+      <div class=" mt-3  d-flex  justify-content-center  " itemprop="articleBody">
+        {{ article.content }}</div>
+
+  {% else %}
+
+    {% endcase %}
+
+  {% endfor %}
+
+</article>
+{% if blog.comments_enabled? %}{% endif %}
 
 
 {% schema %}
@@ -26,6 +68,33 @@
         "id": "enable_Published_date",
         "default": true,
         "label": "Display Published Date"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "article_title",
+        "name": "Title",
+        "limit": 1
+      },
+      {
+        "type": "article_author",
+        "name": "Author",
+        "limit": 1
+      },
+      {
+        "type": "article_published_date",
+        "name": "Published date",
+        "limit": 1
+
+      },
+      {
+        "type": "featured_image",
+        "name": "Thumbnail",
+        "limit": 1
+      }, {
+        "type": "article_content",
+        "name": "Content",
+        "limit": 1
       }
     ]
   }

@@ -1,0 +1,12 @@
+{% if cart.item_count > 0 %}
+  <h1>
+    your card</h1>
+  <a href="{{ routes.all_products_collection_url }}">
+    continue shopping</a>
+{% else %}
+
+  <a href="{{ routes.all_products_collection_url }}" class="btn btn-secondary">continue shopping</a>
+
+
+
+{% endif %}
