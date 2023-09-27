@@ -1,12 +1,57 @@
-{% if cart.item_count > 0 %}
-  <h1>
+
+  <div>
+    <h1>
     your card</h1>
   <a href="{{ routes.all_products_collection_url }}">
     continue shopping</a>
+  </div>
+  <div>
+    <form action="{{routes.cart_url}}" method="POST" novalidate>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">product</th>
+            <th scope="col">Quality</th>
+            <th scope="col">Total</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart.items %}
+             <tr>
+            <th scope="row">1</th>
+            <td>
+              <a href="{{item.url}}">
+                {% if item.image %}
+                <img src="{{item.image | img_url:'small'}}" alt="{{item.title | escape}}">
+                {% else %}
+                  {{'product-1'| placeholder_svg_tag : 'w-50 h-auto'}}
+                  
+                {% endif %}
+              </a>
+            </td>
+            <td>
+              <a href="{{item.url}}">{{item.product.title | truncatewords: 5 }}</a>
+              <span>{{ item.variant.title }}</span>
+              <a href="/cart/change?line=1&quantity=0">remove</a>
+
+            </td>
+            <td>@mdo</td>
+          </tr>
+          {% endfor %}
+         
+          
+        </tbody>
+      </table>
+
+    </form>
+  </div>
+
+    
+
+    </form>
 {% else %}
 
   <a href="{{ routes.all_products_collection_url }}" class="btn btn-secondary">continue shopping</a>
 
 
-
-{% endif %}

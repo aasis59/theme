@@ -1,0 +1,39 @@
+<h1>PRODUCT</h1>
+
+{% paginate collection.products by 6 %}
+  {% for product in collection.products %}
+    {% if product.featured_image %}
+      <img src="{{product.featured_image | img_url: 'medium'}}" alt="{{product.featured_image}}">
+    {% endif %}
+    <div>
+      <span>{{ product.vendor }}</span>
+    </div>
+
+    <a href="{{product.url}}">{{ product.title }}</a>
+    <p>
+      {{ product.price | money }}
+    </p>
+
+
+  {% else %}
+    <p>no product</p>
+
+
+  {% endfor %}
+  {% render 'pagination', pagination: paginate %}
+
+{% endpaginate %}
+
+{% schema %}
+  {
+    "name": "Template Collection",
+    "settings": [
+      {
+        "type": "number",
+        "id": "number_of_products_per_page",
+        "default": 6,
+        "label": "Number of products per page"
+      }
+    ]
+  }
+{% endschema %}
