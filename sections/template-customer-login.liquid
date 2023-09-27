@@ -1,0 +1,85 @@
+<div class="container mt-4" x-data="{ loginForm: true, pwRecoverForm: false }">
+  <div x-show="loginForm">
+    {% form 'customer_login' %}
+      {% if form.errors %}
+        <div role="alert">
+          <strong>Error</strong>
+
+          <div class="alert alert-danger" role="alert">
+            {{ form.errors | default_errors }}
+          </div>
+
+        </div>
+      {% endif %}
+      <div class="form-outline mb-4 mt-3">
+        <input
+          type="email"
+          id="form2Example1"
+          class="form-control"
+          name="customer[email]"
+          autocomplete="email" />
+        <label class="form-label" for="form2Example1">Email address</label>
+      </div>
+
+      {% if form.password_needed %}
+        <div class="form-outline mb-4">
+          <input
+            type="password"
+            id="form2Example2"
+            class="form-control"
+            name="customer[password]"
+            autocomplete="current-password" />
+          <label class="form-label" for="form2Example2">Password</label>
+        </div>
+      {% endif %}
+      <div class="mt-2">
+        <a x-on:click="loginForm = false; pwRecoverForm = true" href="#">
+          Forgot your password?
+        </a>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+
+
+    {% endform %}
+
+    
+      
+      
+    {% endif %}
+  </div>
+
+  <div x-show="pwRecoverForm">
+    <div>
+      <h1>Recover yours password</h1>
+    </div>
+    {% form 'recover_customer_password' %}
+      {% if form.errors %}
+        <div role="alert">
+          <strong>Error</strong>
+
+          <div class="alert alert-danger" role="alert">
+            {{ form.errors | default_errors }}
+          </div>
+
+        </div>
+      {% endif %}
+      <div class="form-outline mb-4 mt-3">
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          name="email"
+          autocomplete="email" />
+        <label class="form-label" for="email">Email address</label>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block mb-4">Recover Password</button>
+      <div>
+        <a x-on:click="loginForm = true; pwRecoverForm = false" href="#">Back to login</a>
+      </div>
+
+
+
+    {% endform %}
+  </div>
+</div>

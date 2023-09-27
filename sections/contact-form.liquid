@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  {% form 'contact' %}
+
+    <label for="contact_name" class="form-label">
+      Name
+    </label>
+
+    <input
+      type="text"
+      name="contact[name]"
+      id="contact_name" class="form-control">
+
+    <label for="contact_email" class="form-label" >
+      Email address</label>
+
+    <input
+      type="email"
+      name="contact[email]"
+      id="contact_email" class="form-control">
+
+    <label for="contact_message" class="form-label">
+      Message</label>
+
+    <textarea name="contact[body]" id="contact_message" class="form-control"></textarea>
+    <input type="submit" value="Submit Message" >
+   
+  
+</div>
+
+  {% endform %}
+</div>
+
+{% schema %}
+  {
+    "name": "Contact Form",
+    "presets": [
+      {
+        "name": "Contact Form"
+      }
+    ]
+  }
+{% endschema %}

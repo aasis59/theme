@@ -1,0 +1,37 @@
+<div>{{ section.settings.title }}</div>
+{% for collection in collections %}
+  {% if collection.all_products_count > 0 %}
+    <div class="text-center">
+      <div>
+        <a href="{{ collection.url }}"></a>
+        <div>
+          {% if collection.featured_image != blank %}
+            {% assign collection_image = collection.featured_image %}
+          {% else %}
+            {% assign collection_image = collections.products.first.iamge %}
+          {% endif %}
+          <img src="{{ collection_image | img_url: 'medium'}}" alt="{{ collection.title | escape }}">
+        </div>
+        <h1>{{ collection.title }}</h1>
+      </div>
+
+    </div>
+
+
+  {% endif %}
+
+{% endfor %}
+{% schema %}
+  {
+    "name": "Tempalte List Collection",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "default": "Collection",
+        "label": "Title"
+      }
+    ]
+
+  }
+{% endschema %}
