@@ -1,0 +1,29 @@
+<div class="container">
+  <div>Account</div>
+  <div>
+    {% assign number_of_orders = customer.orders | size %}
+    {% if number_of_orders > 0 %}
+      <div>
+        <h2>
+          Order History
+        </h2>
+
+      </div>
+      <div>
+        {% paginate customer.orders by 10 %}
+          {% for order in customer.orders %}
+            <div>
+              {{ order.name }}
+            </div>
+
+          {% endfor %}
+        {% endpaginate %}
+      </div>
+    {% else %}
+      <div>
+        You have not placed any orders yet!
+      </div>
+
+    {% endif %}
+  </div>
+</div>
